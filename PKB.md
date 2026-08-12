@@ -2773,3 +2773,23 @@ SELECT ProfileId FROM User WHERE Alias = 'autoproc'
 ```xml
 /setup/layout/flsdetail.jsp?id={autoproc_profile_id}&type={sObjectId}
 ```
+
+## 368.
+O que: Erro: "Your account record type is missing, a duplicate, or invalid. Ask your admin to check the group record type configurations in Setup."
+Quando: Insere account em Financial Services and Health (nuvem FSC) em contexto de teste (Apex)
+Por que: https://help.salesforce.com/s/articleView?id=000383364&type=1
+Solução:
+O artigo propõe reativar certos record types, etc.
+Mas outra solução mais simples é inserir um custom setting do FSC antes de inserir os registros de account:
+```java
+	FinServ__UsePersonAccount__c personAccountSetting = new FinServ__UsePersonAccount__c(
+		Name = 'Use Person Account',
+		FinServ__Enable__c = true
+	);
+	insert personAccountSetting;
+```
+
+## 369.
+O que: Erro System.UnexpectedException: Access Blocked
+Quando: Erro ao executar classes de teste durante validação de deploy
+Artigo: https://help.salesforce.com/s/articleView?id=005227573&type=1

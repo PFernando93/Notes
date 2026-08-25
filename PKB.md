@@ -2793,3 +2793,10 @@ Mas outra solução mais simples é inserir um custom setting do FSC antes de in
 O que: Erro System.UnexpectedException: Access Blocked
 Quando: Erro ao executar classes de teste durante validação de deploy
 Artigo: https://help.salesforce.com/s/articleView?id=005227573&type=1
+
+## 370.
+O que: Erro System.DmlException: Insert failed. First exception on row 0; first error: INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST, bad value for restricted picklist field: `<VALUE>`: [<FIELD>]
+Quando: Ao tentar inserir um registro com um campo de picklist restrito
+Por que: Há 2 possibilidades:
+	* O valor não é um dos valores permitidos
+	* O valor não está habilitado pro record type do registro

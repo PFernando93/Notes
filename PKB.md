@@ -2800,3 +2800,10 @@ Quando: Ao tentar inserir um registro com um campo de picklist restrito
 Por que: Há 2 possibilidades:
 	* O valor não é um dos valores permitidos
 	* O valor não está habilitado pro record type do registro
+
+## 371.
+O que: Objeto Person Account
+Sobre: 
+	* Pode não aparecer na busca do Inspector. Deve ser encontrado em Setup > Object Manager
+	* O record type "Natural Person" (PersonAccount) está nas configurações deste objeto e não de Account
+* 

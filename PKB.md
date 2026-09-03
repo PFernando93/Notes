@@ -1995,7 +1995,7 @@ apenas não retorna toda a tag recordTypeVisibilities):
 ## 278.
  StandardValueSet
 	* Custom metadata usado em retrieves de valores de picklist de campos padrão
-	* Valores de Picklists de campos custom são definidos no metadata CustomFields, que
+	* Valores de Picklists de campos custom são definidos no metadata CustomField, que
 	retorna um metadata na pasta fields do objeto em questão. Exemplo:
 		* force-app\main\default\objects\Account\fields\AccountEmail__c.field-meta.xml
 	* Subir um StandardValueSet com menos valores no ambiente origem em relação ao target, não
@@ -2793,6 +2793,7 @@ Mas outra solução mais simples é inserir um custom setting do FSC antes de in
 O que: Erro System.UnexpectedException: Access Blocked
 Quando: Erro ao executar classes de teste durante validação de deploy
 Artigo: https://help.salesforce.com/s/articleView?id=005227573&type=1
+Commando: Auth.SessionManagement.setSessionLevel(Auth.SessionLevel.HIGH_ASSURANCE);
 
 ## 370.
 O que: Erro System.DmlException: Insert failed. First exception on row 0; first error: INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST, bad value for restricted picklist field: `<VALUE>`: [<FIELD>]
@@ -2806,4 +2807,3 @@ O que: Objeto Person Account
 Sobre: 
 	* Pode não aparecer na busca do Inspector. Deve ser encontrado em Setup > Object Manager
 	* O record type "Natural Person" (PersonAccount) está nas configurações deste objeto e não de Account
-* 

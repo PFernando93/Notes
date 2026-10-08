@@ -2794,6 +2794,8 @@ O que: Erro System.UnexpectedException: Access Blocked
 Quando: Erro ao executar classes de teste durante validação de deploy
 Artigo: https://help.salesforce.com/s/articleView?id=005227573&type=1
 Commando: Auth.SessionManagement.setSessionLevel(Auth.SessionLevel.HIGH_ASSURANCE);
+Solução PRA CONNECTED APP:
+Setup > Apps > Manage Connected Apps > `<App>` > Edit Policies > check "High assurance session required" > check "Raise the session level to high assurance".
 
 ## 370.
 O que: Erro System.DmlException: Insert failed. First exception on row 0; first error: INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST, bad value for restricted picklist field: `<VALUE>`: [<FIELD>]

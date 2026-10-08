@@ -1,0 +1,193 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        // MARK: Git
+        {
+            "label": "Git: Log diff",
+            "type": "shell",
+            "command": "git diff --staged > gitDiff.txt",
+            "problemMatcher": []
+        },
+
+        // MARK: Deploy Validation
+        {
+            "label": "Deploy: validate (sandboxes)",
+            "type": "shell",
+            "command": "sf",
+            "args": [
+                "project",
+                "deploy",
+                "start",
+                "--dry-run",
+                "--manifest",
+                "manifest/${input:manifest}.xml",
+                "--target-org",
+                "${input:target-org-sandbox}",
+                "--test-level",
+                "RunRelevantTests"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Deploy: validate (prod)",
+            "type": "shell",
+            "command": "sf",
+            "args": [
+                "project",
+                "deploy",
+                "validate",
+                "--manifest",
+                "manifest/${input:manifest}.xml",
+                "--target-org",
+                "${input:target-org-prod}",
+                "--test-level",
+                "RunRelevantTests"
+            ],
+            "problemMatcher": []
+        },
+        // MARK: Deploy (sandboxes only)
+        {
+            "label": "Deploy: (sandboxes)",
+            "type": "shell",
+            "command": "sf",
+            "args": [
+                "project",
+                "deploy",
+                "start",
+                "--manifest",
+                "manifest/${input:manifest}.xml",
+                "--target-org",
+                "${input:target-org-sandbox}",
+                "--test-level",
+                "RunRelevantTests"
+            ],
+            "problemMatcher": []
+        },
+        // MARK: General
+        {
+            "label": "Authorize: sandbox org",
+            "type": "shell",
+            "command": "sf",
+            "args": [
+                "org",
+                "login",
+                "web",
+                "--alias",
+                "${input:target-org-sandbox}",
+                "--instance-url",
+                "https://test.salesforce.com"
+            ],
+            "problemMatcher": [],
+        },
+        {
+            "label": "Open: sandbox org",
+            "type": "shell",
+            "command": "sf",
+            "args": [
+                "org",
+                "open",
+                "--target-org",
+                "${input:target-org-sandbox}"
+            ],
+            "problemMatcher": [],
+        },
+        {
+            "label": "Open: prod org",
+            "type": "shell",
+            "command": "sf",
+            "args": [
+                "org",
+                "open",
+                "--target-org",
+                "${input:target-org-prod}"
+            ],
+            "problemMatcher": [],
+            "dependsOn": [
+                "Run grantHighAssuranceSessionLevel.apex (prod)"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
+            "label": "Run grantHighAssuranceSessionLevel.apex (sandbox)",
+            "type": "shell",
+            "command": "sf",
+            "args": [
+                "apex",
+                "run",
+                "--file",
+                "scripts/apex/grantHighAssuranceSessionLevel.apex",
+                "--target-org",
+                "${input:target-org-sandbox}"
+            ],
+            "problemMatcher": [],
+                        "dependsOn": [
+                "Open: sandbox org"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
+            "label": "Run grantHighAssuranceSessionLevel.apex (prod)",
+            "type": "shell",
+            "command": "sf",
+            "args": [
+                "apex",
+                "run",
+                "--file",
+                "scripts/apex/grantHighAssuranceSessionLevel.apex",
+                "--target-org",
+                "${input:target-org-prod}"
+            ],
+            "problemMatcher": [],
+            "hide": true
+        },
+        {
+            "label": "Open: org deployment status (sandbox)",
+            "type": "shell",
+            "command": "sf",
+            "args": [
+                "org",
+                "open",
+                "--target-org",
+                "${input:target-org-sandbox}",
+                "--path",
+                "lightning//setup//DeployStatus//home"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Open: org deployment status (prod)",
+            "type": "shell",
+            "command": "sf",
+            "args": [
+                "org",
+                "open",
+                "--target-org",
+                "${input:target-org-prod}",
+                "--path",
+                "lightning//setup//DeployStatus//home"
+            ],
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+            "id": "manifest",
+            "type": "promptString",
+            "description": "enter the package xml file name (no .xml needed) relative to manifest folder"
+        },
+        // MARK: Personal setttings bellow
+        {
+            "id": "target-org-sandbox",
+            "type": "pickString",
+            "description": "choose the target org (sandbox)",
+            "options": ["beaconpointe--sb", "beaconpointe--staging", "paulosb"],
+            "default": "beaconpointe--sb"
+        },
+        {
+            "id": "target-org-prod",
+            "type": "promptString",
+            "description": "choose the target org (prod)",
+            "default": "beaconpointe"
+        }
+    ]
+}

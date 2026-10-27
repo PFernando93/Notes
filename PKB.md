@@ -2809,3 +2809,7 @@ O que: Objeto Person Account
 Sobre: 
 	* Pode não aparecer na busca do Inspector. Deve ser encontrado em Setup > Object Manager
 	* O record type "Natural Person" (PersonAccount) está nas configurações deste objeto e não de Account
+
+## 372.
+SetupEntityAccess entity types:
+![alt text](image.png)
